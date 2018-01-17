@@ -35,23 +35,23 @@ public class StandardMergeSort {
         
         // base case
         if(p < r){
-            int q = (p + r)/2; // the index being split on
+            int q = (p + r)/2; // the index being split on (it also floors it)
             
             MergeSort(A,p,q); // Keep splitting left till hits base case
             MergeSort(A,q+1,r); // Then split the rightside recursively (Following the recursive stack)
-            Merge(A,p,q,r); // Finally merge the two split arrays together
+            Merge(A,p,q,r); // Finally merge the two split arrays together 
         }
     }
     
-    
+    /**
+     * Merge runs in O(n) time where n = r - p + 1
+     * @param A
+     * @param p
+     * @param q
+     * @param r 
+     */
     public static void Merge(int[] A, int p, int q, int r){
-        System.out.println(q);
-        for(int i = p; i <= r; i++){
-            System.out.print(A[i] + " ");
-        }
-        System.out.println("");
-        
-        
+
         int n1 = q-p+1; // length of left array (# of elem's from p to q .. inclusive)
         int n2 = r - q; // length of right array(# of elem's from q to r .. not including q);
         
@@ -61,30 +61,19 @@ public class StandardMergeSort {
         left[n1] = Integer.MAX_VALUE; // sentinel value (infinity)
         right[n2] = Integer.MAX_VALUE; // sentinel value (infinity)
         
+        // Fill left sub array with appropiate elements from p to q in A[]
         for(int i = 0; i < n1; i++){
             left[i] = A[i + p];
         }
+        
+        // Fill right sub array with appropiate elements from q+1 to r in A[]
         for(int i = 0; i < n2; i++){
             right[i] = A[i + q + 1];
         }
+
+        int i = 0, j = 0; // keep track of smallest elem in each array (left & right)
         
-        System.out.print("Left: ");
-        for(int i = 0; i<left.length; i++){
-            System.out.print(left[i] + " ");
-        }
-        System.out.println("");
-        
-        System.out.print("Right: ");
-        for(int i = 0; i<right.length; i++){
-            System.out.print(right[i] + " ");
-        }
-        System.out.println("");
-        
-        
-        
-        
-        int i = 0, j = 0;
-        
+        // Combine into A[]
         for(int k = p; k <= r; k++){
             
             if(left[i] < right[j]){
